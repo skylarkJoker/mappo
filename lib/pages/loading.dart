@@ -20,7 +20,7 @@ class _LoadingState extends State<Loading> {
   @override
   void initState() {
     super.initState();
-    loadMap();
+    // loadMap();
   }
 
   @override
