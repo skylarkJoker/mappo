@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:zero_project/pages/map.dart';
+import 'package:zero_project/pages/home.dart';
 
 class Hub extends StatefulWidget {
   const Hub({Key key}) : super(key: key);
@@ -14,19 +16,18 @@ class _HubState extends State<Hub> {
     setState(() => {_selectedIndex = index});
   }
 
-  void loadData() async {
-    String message = await Future.delayed(Duration(seconds: 3), () {
-      return 'Why hello there!';
-    });
-    print('loaded');
-  }
+  static List<Widget> _widgetOptions = <Widget>[
+    Home(),
+    Overwatch(),
+    Container(
+      child: Text('Profile'),
+    ),
+  ];
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    loadData();
-    print('ummm...');
   }
 
   @override
@@ -38,7 +39,7 @@ class _HubState extends State<Hub> {
         title: Text('Hub'),
         centerTitle: true,
       ),
-      body: Container(child: Text('HUB')),
+      body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
