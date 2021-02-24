@@ -12,7 +12,6 @@ class Hub extends StatefulWidget {
 
 class _HubState extends State<Hub> {
   int _selectedIndex = 0;
-  bool _firstTime = true;
 
   void _onItemTapped(int index) {
     if (index == 2) {

@@ -8,6 +8,11 @@ class Wizard extends StatefulWidget {
 }
 
 class _WizardState extends State<Wizard> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   final controller = PageController(initialPage: 0);
 
   List<Widget> wizardPages = [
