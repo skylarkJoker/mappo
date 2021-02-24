@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zero_project/pages/map.dart';
 import 'package:zero_project/pages/home.dart';
+import 'package:zero_project/pages/wizard.dart';
 
 class Hub extends StatefulWidget {
   const Hub({Key key}) : super(key: key);
@@ -11,9 +12,14 @@ class Hub extends StatefulWidget {
 
 class _HubState extends State<Hub> {
   int _selectedIndex = 0;
+  bool _firstTime = true;
 
   void _onItemTapped(int index) {
-    setState(() => {_selectedIndex = index});
+    if (index == 2) {
+      Navigator.pushNamed(context, '/profile');
+    } else {
+      setState(() => {_selectedIndex = index});
+    }
   }
 
   static List<Widget> _widgetOptions = <Widget>[
@@ -23,6 +29,12 @@ class _HubState extends State<Hub> {
       child: Text('Profile'),
     ),
   ];
+
+  void loadWizard(context) async {
+    await Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return Wizard();
+    }));
+  }
 
   @override
   void initState() {

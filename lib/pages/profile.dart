@@ -6,76 +6,85 @@ class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-        physics: BouncingScrollPhysics(),
-        slivers: [
-          SliverAppBar(
-            stretch: true,
-            onStretchTrigger: () {
-              return;
-            },
-            expandedHeight: 200.0,
-            actions: [
-              IconButton(
-                icon: Icon(Icons.edit),
-                onPressed: () => {},
+        appBar: AppBar(
+          title: Text('Profile'),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.edit),
+              onPressed: () => {},
+            ),
+            IconButton(
+              icon: Icon(Icons.settings),
+              onPressed: () => {},
+            ),
+          ],
+        ),
+        body: Container(
+          child: Column(
+            children: [
+              Container(
+                child: Stack(
+                  children: [
+                    Image.asset(
+                      'assets/images/lowpoly.png',
+                      fit: BoxFit.cover,
+                    ),
+                    Positioned.fill(
+                      bottom: -50,
+                      child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: CircleAvatar(
+                          backgroundColor: Colors.white,
+                          radius: 50,
+                        ),
+                      ),
+                    ),
+                  ],
+                  overflow: Overflow.visible,
+                ),
               ),
-              IconButton(
-                icon: Icon(Icons.settings),
-                onPressed: () => {},
+              SizedBox(
+                height: 50.0,
+              ),
+              Text(
+                'Jo-Hann Joseph',
+                style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+              ),
+              Text(
+                'checked in at The Moon @11:00AM',
+                style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 12.0,
+                    fontWeight: FontWeight.w100),
+              ),
+              SizedBox(
+                height: 50.0,
+              ),
+              ListTile(
+                leading: Icon(Icons.history),
+                title: Text('My travel history'),
+                trailing: Icon(Icons.navigate_next),
+              ),
+              Divider(
+                color: Colors.grey,
+                indent: 30.0,
+              ),
+              ListTile(
+                leading: Icon(Icons.group),
+                title: Text('My Travitt Groups'),
+                trailing: Icon(Icons.navigate_next),
+              ),
+              Divider(
+                color: Colors.grey,
+                indent: 30.0,
+              ),
+              ListTile(
+                leading: Icon(Icons.notes),
+                title: Text('My Notes'),
+                trailing: Icon(Icons.navigate_next),
               ),
             ],
-            flexibleSpace: Stack(
-              fit: StackFit.expand,
-              children: [
-                Image.asset(
-                  'assets/images/trianglify-lowres1.png',
-                  fit: BoxFit.cover,
-                ),
-                Positioned.fill(
-                  bottom: -50,
-                  child: Align(
-                    alignment: Alignment.bottomCenter,
-                    child: CircleAvatar(
-                      backgroundColor: Colors.white,
-                      radius: 50,
-                    ),
-                  ),
-                ),
-              ],
-              overflow: Overflow.visible,
-            ),
           ),
-          SliverList(
-            delegate: SliverChildListDelegate([
-              SizedBox(
-                height: 100.0,
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 20.0),
-                child: Column(children: [
-                  Text(
-                    'Jo-Hann Joseph',
-                    style:
-                        TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  Text(
-                    'currently checked in at The Moon',
-                    style: TextStyle(color: Colors.grey),
-                  )
-                ]),
-              ),
-            ]),
-          )
-        ],
-      ),
-    );
+        ));
   }
 }

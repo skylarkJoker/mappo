@@ -12,9 +12,9 @@ class Overwatch extends StatefulWidget {
 
 class _OverwatchState extends State<Overwatch> {
   Future<String> getAPIKey() async {
-    Response response = await get('http://10.5.34.21:3002/api_key');
+    Response response = await get('http://192.168.1.7:3002/api_key');
     Map apiKey = jsonDecode(response.body);
-    return apiKey['mapbox_key'];
+    return apiKey['priv_mapbox_key'];
   }
 
   @override
@@ -31,11 +31,15 @@ class _OverwatchState extends State<Overwatch> {
         Widget map;
         if (snapshot.connectionState == ConnectionState.done &&
             snapshot.hasData) {
-          map = MapboxMap(
-            initialCameraPosition:
-                CameraPosition(target: LatLng(17.14019, -61.79251), zoom: 10.0),
-            accessToken: snapshot.data,
-            // styleString: 'mapbox://styles/jovis1667/ckl9k0bdf10g217ptf7pxi9m2',
+          // map = MapboxMap(
+          //   initialCameraPosition:
+          //       CameraPosition(target: LatLng(17.14019, -61.79251), zoom: 10.0),
+          //   accessToken: snapshot.data,
+          //   styleString: 'mapbox://styles/jovis1667/ckl9k0bdf10g217ptf7pxi9m2',
+          // );
+          map = Image.network(
+            'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn-images-1.medium.com%2Fmax%2F1200%2F0*yPSQlTHRvLaIVBcG.jpg&f=1&nofb=1',
+            fit: BoxFit.fill,
           );
         } else if (snapshot.hasError) {
           map = Column(
