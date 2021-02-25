@@ -15,23 +15,49 @@ class _WizardState extends State<Wizard> {
 
   final controller = PageController(initialPage: 0);
 
-  List<Widget> wizardPages = [
-    Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [Icon(Icons.location_city), Text('Chose your destination!')]),
-    Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [Icon(Icons.car_rental), Text('Choose your transport!')],
-      ),
-    ),
-    Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [Icon(Icons.camera), Text('Take a picture of your outfit')],
-      ),
-    )
+  List content = [
+    {
+      'icon': Icons.place_outlined,
+      'title': 'Choose your destination',
+      'text': 'Using the navigation feauture, select where you want to go!',
+    },
+    {
+      'icon': Icons.navigation_outlined,
+      'title': 'Select your prefered route',
+      'text':
+          'Pick your path to your destination based on stops or available transportation',
+    },
+    {
+      'icon': Icons.photo_camera_outlined,
+      'title': 'Take a picture',
+      'text':
+          'Let your friends know that your traveling in style! Also makes it easy for them to find you in a crowd :)',
+    },
   ];
+
+  Widget wizardPage({IconData icon, String title, String text}) {
+    return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+      Icon(icon, size: 170, color: Colors.teal),
+      SizedBox(
+        height: 30,
+      ),
+      Text(
+        title,
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+      ),
+      SizedBox(
+        height: 20,
+      ),
+      SizedBox(
+        width: 200,
+        child: Text(
+          text,
+          style: TextStyle(color: Colors.grey),
+          textAlign: TextAlign.center,
+        ),
+      )
+    ]);
+  }
 
   Widget dots(bool isActive) {
     return AnimatedContainer(
@@ -45,39 +71,106 @@ class _WizardState extends State<Wizard> {
     );
   }
 
-  int _currentPage = 1;
+  int _currentPage = 0;
+  bool _lastPage = false;
+  bool _firstPage = true;
+
+  void prevPageButton() {
+    controller.previousPage(
+        duration: Duration(milliseconds: 400), curve: Curves.easeInOut);
+  }
+
+  void nextPageButton() {
+    if (_lastPage)
+      Navigator.pushReplacementNamed(context, '/');
+    else
+      controller.nextPage(
+          duration: Duration(milliseconds: 400), curve: Curves.easeInOut);
+  }
 
   void onPageChange(int page) {
     setState(() {
       _currentPage = page;
     });
+    if (_currentPage == content.length - 1)
+      setState(() {
+        _lastPage = true;
+      });
+    else
+      setState(() {
+        _lastPage = false;
+      });
+
+    if (_currentPage == 0)
+      setState(() {
+        _firstPage = true;
+      });
+    else
+      setState(() {
+        _firstPage = false;
+      });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
-      child: Stack(alignment: Alignment.bottomCenter, children: [
+      body: Stack(alignment: Alignment.bottomCenter, children: [
         PageView.builder(
             controller: controller,
             onPageChanged: (page) {
               onPageChange(page);
             },
-            itemCount: wizardPages.length,
+            itemCount: content.length,
             itemBuilder: (context, index) {
-              return wizardPages[index];
+              return wizardPage(
+                  icon: content[index]['icon'],
+                  title: content[index]['title'],
+                  text: content[index]['text']);
             }),
         Container(
-          margin: EdgeInsets.only(bottom: 35),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              for (int i = 0; i < wizardPages.length; i++)
-                if (i == _currentPage) dots(true) else dots(false)
+          // margin: EdgeInsets.only(bottom: 35),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  for (int i = 0; i < content.length; i++)
+                    if (i == _currentPage) dots(true) else dots(false)
+                ],
+              ),
+              SizedBox(
+                height: 35,
+              ),
+              Row(
+                children: <Widget>[
+                  _firstPage
+                      ? Container()
+                      : Expanded(
+                          child: FlatButton(
+                            onPressed: () {
+                              prevPageButton();
+                            },
+                            child: Text('BACK'),
+                          ),
+                        ),
+                  Expanded(
+                    child: FlatButton(
+                      height: 50,
+                      onPressed: () {
+                        nextPageButton();
+                      },
+                      child: _lastPage ? Text('FINISH') : Text('NEXT'),
+                      color: Colors.teal,
+                    ),
+                  )
+                ],
+              ),
             ],
           ),
         )
       ]),
-    ));
+    );
   }
 }

@@ -49,6 +49,7 @@ class _HubState extends State<Hub> {
         backgroundColor: Colors.teal[500],
         title: Text('Hub'),
         centerTitle: true,
+        automaticallyImplyLeading: false,
       ),
       body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
