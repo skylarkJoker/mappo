@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:zero_project/pages/settings.dart';
+import 'package:zero_project/pages/circles.dart';
 
 class Profile extends StatelessWidget {
-  const Profile({Key key}) : super(key: key);
+  const Profile({Key key, this.friendPage}) : super(key: key);
+
+  final bool friendPage;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: CustomScrollView(
-      slivers: [
-        SliverAppBar(
+        appBar: AppBar(
           backgroundColor: Colors.teal,
-          expandedHeight: 200,
           actions: [
             IconButton(
               icon: Icon(Icons.edit),
@@ -18,78 +19,85 @@ class Profile extends StatelessWidget {
             ),
             IconButton(
               icon: Icon(Icons.settings),
-              onPressed: () => {},
+              onPressed: () => {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return Settings();
+                }))
+              },
             ),
           ],
-          flexibleSpace: Stack(
-            fit: StackFit.expand,
-            children: [
-              Image.asset(
-                'assets/images/lowpoly.png',
-                fit: BoxFit.cover,
-              ),
-              Positioned.fill(
-                bottom: -50,
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: CircleAvatar(
-                    backgroundColor: Colors.white,
-                    radius: 50,
-                  ),
-                ),
-              ),
-            ],
-            overflow: Overflow.visible,
-          ),
         ),
-        SliverList(
-            delegate: SliverChildListDelegate([
-          SizedBox(
-            height: 80.0,
-          ),
-          Center(
-            child: Text(
-              'Jo-Hann Joseph',
-              style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+        body: Column(
+          children: [
+            SizedBox(
+              height: 40.0,
             ),
-          ),
-          Center(
-            child: Text(
-              'checked in at The Moon @11:00AM',
-              style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 12.0,
-                  fontWeight: FontWeight.w100),
+            CircleAvatar(
+              backgroundColor: Colors.teal,
+              child: Icon(
+                Icons.person,
+                color: Colors.white,
+              ),
+              radius: 50,
             ),
-          ),
-          SizedBox(
-            height: 50.0,
-          ),
-          ListTile(
-            leading: Icon(Icons.history),
-            title: Text('My travel history'),
-            trailing: Icon(Icons.navigate_next),
-          ),
-          Divider(
-            color: Colors.grey,
-            indent: 30.0,
-          ),
-          ListTile(
-            leading: Icon(Icons.group),
-            title: Text('My Travitt Groups'),
-            trailing: Icon(Icons.navigate_next),
-          ),
-          Divider(
-            color: Colors.grey,
-            indent: 30.0,
-          ),
-          ListTile(
-            leading: Icon(Icons.notes),
-            title: Text('My Notes'),
-            trailing: Icon(Icons.navigate_next),
-          ),
-        ]))
-      ],
-    ));
+            SizedBox(
+              height: 20.0,
+            ),
+            Center(
+              child: Text(
+                'Jo-Hann Joseph',
+                style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+              ),
+            ),
+            Center(
+              child: Text(
+                'checked in at The Moon @11:00AM',
+                style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 12.0,
+                    fontWeight: FontWeight.w100),
+              ),
+            ),
+            SizedBox(
+              height: 50.0,
+            ),
+            friendPage
+                ? Container(
+                    color: Colors.grey,
+                    height: 300,
+                  )
+                : Expanded(
+                    child: ListView(
+                    children: [
+                      ListTile(
+                        leading: Icon(Icons.history),
+                        title: Text('My Travel History'),
+                        trailing: Icon(Icons.navigate_next),
+                        onTap: () => Navigator.pushNamed(context, '/myhistory'),
+                      ),
+                      Divider(
+                        color: Colors.grey,
+                        indent: 30.0,
+                      ),
+                      ListTile(
+                        leading: Icon(Icons.group),
+                        title: Text('My Travitt Circle'),
+                        trailing: Icon(Icons.navigate_next),
+                        onTap: () => Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => Circles())),
+                      ),
+                      Divider(
+                        color: Colors.grey,
+                        indent: 30.0,
+                      ),
+                      ListTile(
+                        leading: Icon(Icons.notes),
+                        title: Text('My Notes'),
+                        trailing: Icon(Icons.navigate_next),
+                      ),
+                    ],
+                  ))
+          ],
+        ));
   }
 }

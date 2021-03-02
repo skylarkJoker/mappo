@@ -23,7 +23,8 @@ class _LoginState extends State<Login> {
             children: [
               Container(
                 decoration: BoxDecoration(
-                    color: Colors.teal[500], shape: BoxShape.circle),
+                    color: Theme.of(context).primaryColor,
+                    shape: BoxShape.circle),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Icon(
@@ -62,10 +63,9 @@ class _LoginState extends State<Login> {
                 children: [
                   Expanded(
                     child: FlatButton(
-                        onPressed: () =>
-                            {Navigator.pushNamed(context, '/home')},
+                        onPressed: () => {Navigator.pushNamed(context, '/')},
                         child: Text('LOGIN'),
-                        color: Colors.teal[500],
+                        color: Theme.of(context).primaryColor,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(50.0))),
                   ),
@@ -74,11 +74,14 @@ class _LoginState extends State<Login> {
               SizedBox(
                 height: 10.0,
               ),
-              Text(
-                'New user? Sign Up',
-                style: TextStyle(
-                  color: Colors.teal[500],
+              TextButton(
+                child: Text(
+                  ' New user? Sign Up ',
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                  ),
                 ),
+                onPressed: null,
               ),
             ],
           ),
